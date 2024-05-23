@@ -8,7 +8,7 @@ export class Pessoa {
         this._idade = idade;
     }
 
-    private mostrarNome(): string {
+    protected mostrarNome(): string {
         return `Nome: ${this._nome}`;
     }
 
@@ -19,10 +19,6 @@ export class Pessoa {
     // Método público que acessa um método privado
     public apresentar(): string {
         return `${this.mostrarNome()}, ${this.mostrarIdade()}}`;
-    }
-
-    public falar() {
-        return "Olá, tudo bem ?";
     }
 
 }
@@ -40,7 +36,8 @@ export class Funcionario extends Pessoa {
 
     public mostrarInformacoes(): string {
         // Acessando atributo protegido e método protegido da classe base
-        return `Nome: ${super.mostrarNome()} Cargo: ${this._cargo}, Idade: ${this.mostrarIdade()}, Salario: ${this._salario}`;
+        return `Nome: ${this.mostrarNome()} Cargo: ${this._cargo}, Idade: ${this.mostrarIdade()}, Salario: ${this._salario}`;
+        //return `Cargo: ${this._cargo}, Idade: ${this.mostrarIdade()}, Salario: ${this._salario}`;
     }
 
     // Método público que tenta acessar um atributo privado da classe base (não permitido)
@@ -49,8 +46,47 @@ export class Funcionario extends Pessoa {
         return 'Não é possível acessar o nome diretamente';
     }
 
-    public falar() {
-        return "Terminei minha tarefa !!";
+}
+
+
+
+// Definindo a classes abstratas
+abstract class Animal {
+    // Atributos comuns a todos os animais
+    nome: string;
+    idade: number;
+
+    constructor(nome: string, idade: number) {
+        this.nome = nome;
+        this.idade = idade;
     }
 
+    // Método abstrato (deve ser implementado pelas subclasses)
+    abstract fazerSom(): void;
+    
+
+    // Método comum a todas as subclasses
+    mover(): void {
+        console.log(`${this.nome} está se movendo.`);
+    }
+    mostrarNome() : string {
+        return this.nome;
+    }
+
+}
+
+// Definindo uma subclasse que estende a classe abstrata Animal
+export class Cachorro extends Animal {
+    // Implementando o método abstrato
+    fazerSom(): void {
+        console.log(`${this.nome} diz: Au Au!`);
+    }
+}
+
+// Definindo outra subclasse que estende a classe abstrata Animal
+export class Gato extends Animal {
+    // Implementando o método abstrato
+    fazerSom(): void {
+        console.log(`${this.nome} diz: Miau!`);
+    }
 }
